@@ -2,15 +2,13 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import argrelextrema
-from scipy.signal import find_peaks
 
 video = cv2.VideoCapture(r"C:\Users\Zachary Lewis\Documents\Bradley\Current\Capstone Project\Capstone Project Code\data\data_1.mp4")
 value = []
 current = 0
 previous = 0
 
-#video.set(1, 310)
+video.set(1, 67)
 
 while (True):
 
@@ -28,7 +26,7 @@ while (True):
 
         value.append(np.mean(image[0:20,:]))
         if value[current] < value[previous] and value[current] < 80:
-            for i in range(0,5):
+            for i in range(0,6):
                 ret, frame = video.read()
             resized = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)
             save_image = resized

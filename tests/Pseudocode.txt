@@ -1,0 +1,26 @@
+## Code Workflow/Pseudocode
+
+necessary imports
+
+(from ECE 465 driver code)
+load CNN labels
+predict function:
+    set tensors to input data
+
+try:
+    initialize tensors for network
+    open video stream
+    color_detect loop (For frame in video):
+        Convert frame to grayscale
+        If frame intensity value < last frame intensity value and < threshold:
+            convert frame to color
+            run CNN prediction on frame
+            send color label to rpi
+    cv2.destroyAllWindows()
+except Keyboard interrupt:
+    pass
+finally:
+    cv2.destroyAllWindows()
+        
+
+
