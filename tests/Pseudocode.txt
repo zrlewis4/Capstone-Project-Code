@@ -1,6 +1,8 @@
-## Code Workflow/Pseudocode
+## Code Workflow/Pseudocode for Jetson Nano
 
 necessary imports
+
+open ssh to RPi
 
 (from ECE 465 driver code)
 load CNN labels
@@ -21,6 +23,24 @@ except Keyboard interrupt:
     pass
 finally:
     cv2.destroyAllWindows()
-        
+
+
+## Code Workflow/Pseudocode for RPi
+
+necessary imports
+
+open ssh to Jetson Nano
+
+try:
+set dispenser gpio to high
+
+	while true:
+		wait till label received
+		set drop gpio high
+		switch(case) for each color set dispenser servo
+except Keyboard interrupt:
+	pass
+finally:
+	gpio.cleanup()
 
 
