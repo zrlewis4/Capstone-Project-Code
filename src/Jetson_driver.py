@@ -70,12 +70,13 @@ def main():
     class_names = ['Blue', 'Brown', 'Green', 'Orange', 'Red', 'Yellow']
 
 
-    video = cv2.VideoCapture()
+    video = cv2.VideoCapture(0)
 
     try:
         while True:
             frame = image_avg(video)
             color_label = color_predict(frame, model, class_names)
+            print(f"This color appears to be: {color_label}")
             if(send_label(color_label)):
                 print("Successfully sent!")
             else:
