@@ -1,6 +1,7 @@
 import os
 import time
 import re
+import serial
 import cv2
 import tensorflow as tf
 import numpy as np
@@ -55,12 +56,13 @@ def color_predict(frame, model, class_names):
     "This image most likely belongs to {} with a {:.2f} percent confidence."
     .format(class_names[np.argmax(score)], 100 * np.max(score))
     )
+    label = class_names[np.argmax(score)] + "\n"
 
-    return class_names[np.argmax(score)]
+    return label
 
-def send_label(label):
-
-    return False
+def send_label(label, ser):
+    data = ser.write(label)
+    return data>0
 
 def main():
     #open serial connection
@@ -68,7 +70,7 @@ def main():
     model_loc = r"C:\Users\Zachary Lewis\Documents\Bradley\Current\Capstone Project\Capstone Project Code\src\Project Model"
     model = tf.keras.models.load_model(model_loc)
     class_names = ['Blue', 'Brown', 'Green', 'Orange', 'Red', 'Yellow']
-
+    ser = serial.Serial('/dev/ttyTHS1')
 
     video = cv2.VideoCapture(0)
 
@@ -76,8 +78,7 @@ def main():
         while True:
             frame = image_avg(video)
             color_label = color_predict(frame, model, class_names)
-            print(f"This color appears to be: {color_label}")
-            if(send_label(color_label)):
+            if(send_label(color_label, ser)):
                 print("Successfully sent!")
             else:
                 print("Failed to send label.")
